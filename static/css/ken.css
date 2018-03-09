@@ -49,7 +49,7 @@
   to { background-position: -280px -400px; } }
 
 /* stance */
-.stance { -webkit-animation: stance steps(4) 0.5s infinite; -moz-animation: stance steps(4) 0.5s infinite; -ms-animation: stance steps(4) 0.5s infinite; animation: stance steps(4) 0.5s infinite; }
+/* .stance { -webkit-animation: stance steps(4) 0.5s infinite; -moz-animation: stance steps(4) 0.5s infinite; -ms-animation: stance steps(4) 0.5s infinite; animation: stance steps(4) 0.5s infinite; }
 
 @-webkit-keyframes stance { from { background-position: 0px -80px; }
   to { background-position: -280px -80px; } }
@@ -61,7 +61,7 @@
   to { background-position: -280px -80px; } }
 
 @keyframes stance { from { background-position: 0px -80px; }
-  to { background-position: -280px -80px; } }
+  to { background-position: -280px -80px; } } */
 
 /* hadoken - must be declared AFTER .stance */
 .hadoken { -webkit-animation: hadoken steps(4) 0.5s infinite; -moz-animation: hadoken steps(4) 0.5s infinite; -ms-animation: hadoken steps(4) 0.5s infinite; animation: hadoken steps(4) 0.5s infinite; }
@@ -204,7 +204,7 @@
 .guile { position: absolute; bottom: 112px; margin-left: 280px; width: 70px; height: 90px; background-image: url(../img/ken/guile.png); }
 
 /* stance */
-.stance2 { -webkit-animation: stance2 steps(3) 0.5s infinite; -moz-animation: stance2 steps(3) 0.5s infinite; -ms-animation: stance2 steps(3) 0.5s infinite; animation: stance2 steps(3) 0.5s infinite; }
+/* .stance2 { -webkit-animation: stance2 steps(3) 0.5s infinite; -moz-animation: stance2 steps(3) 0.5s infinite; -ms-animation: stance2 steps(3) 0.5s infinite; animation: stance2 steps(3) 0.5s infinite; }
 
 @-webkit-keyframes stance2 { from { background-position: 0px 0px; }
   to { background-position: -210px 0px; } }
@@ -216,7 +216,7 @@
   to { background-position: -210px 0px; } }
 
 @keyframes stance2 { from { background-position: 0px 0px; }
-  to { background-position: -210px 0px; } }
+  to { background-position: -210px 0px; } } */
 
 /* hit1 */
 .hit1 { background-image: url(../img/ken/guile-hit.png); -webkit-animation: hit1 steps(1) 0.5s infinite; -moz-animation: hit1 steps(1) 0.5s infinite; -ms-animation: hit1 steps(1) 0.5s infinite; animation: hit1 steps(1) 0.5s infinite; }
