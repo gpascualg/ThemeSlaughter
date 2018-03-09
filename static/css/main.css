@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #EDEDED;
+    height: 100vh;
+    font-family: 'Roboto';
+}
+
+.wrapper {
+    margin: 0 auto;
+    padding-top: 10vh;
+    min-height: 90vh;
+    width: 80%;
+    max-width: 1024px;
+    text-align: center;
+    color: #95989D;
+}
+
+.wrapper h1 {
+    color: #616266;
+}
+
+.themes {
+    padding-top: 50px;
+}
+
+.themes .theme {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.theme .shadow {
+    display: inline-block;
+    background: #FEFFFF;
+    box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+}
+
+.buttons .shadow {
+    clip-path: inset(-30px -30px -30px 0px);
+}
+
+.pad {
+    height: 30px;
+    vertical-align: middle;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    padding: 1em;
+}
+
+.round-left {
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    backface-visibility: hidden;
+}
+
+.round-right {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    backface-visibility: hidden;
+}
+
+.theme .name {
+    text-align: right;
+    width: 50%;
+    float: left;
+}
+
+.theme .buttons {
+    width: 50%;
+    float: left;
+    text-align: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.btn {
+    display: inline-block;
+    background: #FEFFFF;
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    padding: 1em;
+}
+
+.btn.yes {
+    background: #4FD894;
+}
+
+.btn.neutral {
+    background: rgb(216, 145, 79);
+}
+
+.btn.no,
+.buttons .shadow {
+    background: rgb(216, 79, 79);
+}
+
+[data-icon] {
+    color: #FEFFFF;
+    text-align: center;
+    font-weight: bolder;
+}
+
+[data-icon]:before {
+    font-family: icons; /* BYO icon font, mapped smartly */
+    content: attr(data-icon);
+    speak: none; /* Not to be trusted, but hey. */
+}
+
+.active {
+    box-shadow: inset 0px 0px 1px 2px rgba(0,0,0,0.75);
+}

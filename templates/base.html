@@ -1,0 +1,22 @@
+<html>
+    <head>
+        {% block header %}
+        <title>{% block title %}Theme Slaugther{% endblock %}</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Bitter|Roboto+Mono" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/spinner.css') }}">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>        
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+    </head>
+    <body data-islogged="{{ user['is-logged'] }}">
+        {% block content %}{% endblock %}
+
+        <div class="bottom">{% block footer %}{% endblock %}</div>
+    </body>
+</html>
+
