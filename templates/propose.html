@@ -1,24 +1,37 @@
 {% extends 'base.html' %}
 
+{% block header %}
+{{ super() }}
+
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ken.css') }}">
+
+{% endblock %}
+
 {% block content %}
 
-<div class="wrapper">
+<div class="wrapper stage">
     <h1>Theme slaughter</h1>
-    Oh, hi!
+    
+    {% if voting.round == 1 %}
+    <h2><a href="https://www.youtube.com/watch?v=hpFDquNUzL4&t=46s" target="_blank">Round 1, Fight!<br >&lt;Read in Street Fighter's voice&gt;</a></h2>
+    {% endif %}
 
     <div class='themes'>
+        {% for theme in voting.themes %}
         <div class='theme'>
             <div class='name'>
-                <span class='shadow pad round-left'>qweqweqweq</span>
+                <span class='shadow pad round-left'>{{ theme.name }}</span>
             </div>
             <div class='buttons'>
                 <span class='shadow round-right'>
-                    <span class='btn yes' data-icon="&#10004;"></span><span class='btn neutral active' data-icon="&#8776;"></span><span class='btn no round-right' data-icon="&#10006;"></span>
+                    <span class='btn yes {{ "active" if theme.voted == "yes" }}' data-icon="&#10004;"></span><span class='btn neutral  {{ "active" if theme.voted == "neutral" }}' data-icon="&#8776;"></span><span class='btn no {{ "active" if theme.voted == "no" }} round-right' data-icon="&#10006;"></span>
                 </span>
             </div>
             <div class='clear'></div>
         </div>
-
+        {% endfor %}
+<!--         
         <div class='theme'>
             <div class='name'>
                 <span class='shadow pad round-left'>asd qwe 31 werwer werrrr</span>
@@ -41,8 +54,19 @@
                 </span>
             </div>
             <div class='clear'></div>
-        </div>
+        </div> -->
     </div>
+
+    <img class="audio mute" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0OC4wNzUgNDQ4LjA3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ4LjA3NSA0NDguMDc1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxwYXRoIGQ9Ik0zNTIuMDIxLDE2LjA3NWMwLTYuMDgtMy41Mi0xMS44NC04Ljk2LTE0LjRjLTUuNzYtMi44OC0xMi4xNi0xLjkyLTE2Ljk2LDEuOTJsLTE0MS43NiwxMTIuOTZsMTY3LjY4LDE2Ny42OFYxNi4wNzV6IiBmaWxsPSIjMDAwMDAwIi8+CjxwYXRoIGQ9Ik00NDMuMzQ5LDQyMC43NDdsLTQxNi00MTZjLTYuMjQtNi4yNC0xNi4zODQtNi4yNC0yMi42MjQsMHMtNi4yNCwxNi4zODQsMCwyMi42MjRsMTAwLjY3MiwxMDAuNzA0aC05LjM3NiAgYy05LjkyLDAtMTguNTYsNC40OC0yNC4zMiwxMS41MmMtNC44LDUuNDQtNy42OCwxMi44LTcuNjgsMjAuNDh2MTI4YzAsMTcuNiwxNC40LDMyLDMyLDMyaDc0LjI0bDE1NS44NCwxMjQuNDggIGMyLjg4LDIuMjQsNi40LDMuNTIsOS45MiwzLjUyYzIuMjQsMCw0LjgtMC42NCw3LjA0LTEuNmM1LjQ0LTIuNTYsOC45Ni04LjMyLDguOTYtMTQuNHYtNTcuMzc2bDY4LjY3Miw2OC42NzIgIGMzLjEzNiwzLjEzNiw3LjIzMiw0LjcwNCwxMS4zMjgsNC43MDRzOC4xOTItMS41NjgsMTEuMzI4LTQuNjcyQzQ0OS41ODksNDM3LjEzMSw0NDkuNTg5LDQyNy4wMTksNDQzLjM0OSw0MjAuNzQ3eiIgZmlsbD0iIzAwMDAwMCIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+    <img class="audio unmute" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDM0Ny4xODIgMzQ3LjE4MiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzQ3LjE4MiAzNDcuMTgyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTI3Ny44MDgsNS40MjZDMjc0LjE4NywxLjgwOSwyNjkuOTAyLDAsMjY0Ljk1NCwwYy00Ljk0NSwwLTkuMjMzLDEuODA5LTEyLjg0Nyw1LjQyNkwxNTcuMDM0LDEwMC41SDgyLjIzMyAgIGMtNC45NTIsMC05LjIzNSwxLjgwOS0xMi44NTEsNS40MjRjLTMuNjE3LDMuNjIxLTUuNDI2LDcuOTAxLTUuNDI2LDEyLjg1djEwOS42MzRjMCw0Ljk0OCwxLjgwOSw5LjIzMiw1LjQyNiwxMi44NDcgICBjMy42MTksMy42MTcsNy45MDIsNS40MjgsMTIuODUxLDUuNDI4aDc0Ljc5OGw5NS4wNyw5NS4wNzdjMy42MiwzLjYxLDcuOTA0LDUuNDIxLDEyLjg0Nyw1LjQyMWM0Ljk1NSwwLDkuMjM2LTEuODExLDEyLjg1NC01LjQyMSAgIGMzLjYxMy0zLjYxNyw1LjQyNC03LjkwMSw1LjQyNC0xMi44NDdWMTguMjc2QzI4My4yMjUsMTMuMzI4LDI4MS40MjEsOS4wNDIsMjc3LjgwOCw1LjQyNnoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+
+    <div class="ken stance" style="position: absolute; left: calc(50% - 512px);"></div>
+    <div class="guile stance2" style="position: absolute; left: 50%;"></div>
+
+    <script src="{{ url_for('static', filename='js/ken/soundmanager2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ken/webAudioApiForDesigners.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ken/audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ken/ken.v2.js') }}"></script>
 </div>
 
 {% endblock %}

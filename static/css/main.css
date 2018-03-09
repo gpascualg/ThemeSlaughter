@@ -6,6 +6,13 @@ body {
     font-family: 'Roboto';
 }
 
+a,
+a:active,
+a:visited {
+    color: inherit;
+    text-decoration: initial;
+}
+
 .wrapper {
     margin: 0 auto;
     padding-top: 10vh;
@@ -17,11 +24,16 @@ body {
 }
 
 .wrapper h1 {
+    font-size: 3em;
     color: #616266;
 }
 
+.wrapper h2 {
+    font-size: 2em;
+}
+
 .themes {
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
 .themes .theme {
@@ -75,7 +87,8 @@ body {
     clear: both;
 }
 
-.btn {
+.btn,
+.btn::after {
     display: inline-block;
     background: #FEFFFF;
     height: 30px;
@@ -111,6 +124,15 @@ body {
     speak: none; /* Not to be trusted, but hey. */
 }
 
+/* .btn:hover {
+    filter: contrast(200%);
+} */
+/* Scale up the box */
+.btn:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.btn:active,
 .active {
     box-shadow: inset 0px 0px 1px 2px rgba(0,0,0,0.75);
 }
