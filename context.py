@@ -1,8 +1,9 @@
+from flask import g
 
 def build_context():
     return {
         'user': {
-            'is_logged': False
+            'is_logged': g.user is None
         },
         'voting': {
             'round': 1,

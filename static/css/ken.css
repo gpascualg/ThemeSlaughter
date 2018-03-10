@@ -14,7 +14,7 @@
 .flip { -webkit-transform: scaleX(-1); -moz-transform: scaleX(-1); -ms-transform: scaleX(-1); transform: scaleX(-1); }
 
 .ken, .fireball { position: absolute; bottom: 112px; margin-left: 90px; width: 70px; height: 80px; background-image: url(../img/ken/ken.png); }
-.ken:before, .fireball:before { content: ''; z-index: -1; position: absolute; bottom: -2px; left: 17px; right: 17px; height: 6px; background-color: rgba(0, 0, 0, 0.4); -webkit-border-radius: 50%; -moz-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50%; -webkit-box-shadow: 0 0 5px; -moz-box-shadow: 0 0 5px; box-shadow: 0 0 5px; }
+.ken .shadow, .guile .shadow, .fireball .shadow { content: ''; z-index: -1; position: absolute; bottom: -2px; left: 17px; right: 17px; height: 6px; background-color: rgba(0, 0, 0, 0.4); -webkit-border-radius: 50%; -moz-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50%; -webkit-box-shadow: 0 0 5px; -moz-box-shadow: 0 0 5px; box-shadow: 0 0 5px; }
 
 /* ken's fireball */
 .fireball { position: absolute; left: 100%; bottom: 0px; margin-left: 0; background-position: 140px 320px; -webkit-transition: margin 6s linear; -moz-transition: margin 6s linear; -ms-transition: margin 6s linear; transition: margin 6s linear; -webkit-animation: fireball steps(2) 0.15s infinite; -moz-animation: fireball steps(2) 0.15s infinite; -ms-animation: fireball steps(2) 0.15s infinite; animation: fireball steps(2) 0.15s infinite; }
@@ -170,6 +170,7 @@
   to { background-position: -490px -640px; } }
 
 /* shoryuken */
+.ken-shoryuken { background-image: url(../img/ken/ken-shoryuken.png); height: 110px; }
 .shoryuken { height: 110px; background-image: url(../img/ken/ken-shoryuken.png); -webkit-transition: bottom 0.5s cubic-bezier(0.99, 0.005, 0, 0.42); -moz-transition: bottom 0.5s cubic-bezier(0.99, 0.005, 0, 0.42); -ms-transition: bottom 0.5s cubic-bezier(0.99, 0.005, 0, 0.42); transition: bottom 0.5s cubic-bezier(0.99, 0.005, 0, 0.42); bottom: 225px; -webkit-animation: shoryuken steps(7) 1s infinite; -moz-animation: shoryuken steps(7) 1s infinite; -ms-animation: shoryuken steps(7) 1s infinite; animation: shoryuken steps(7) 1s infinite; }
 .shoryuken.down { bottom: 112px; }
 

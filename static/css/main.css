@@ -15,8 +15,8 @@ a:visited {
 
 .wrapper {
     margin: 0 auto;
-    padding-top: 10vh;
-    min-height: 90vh;
+    padding-top: 50px;
+    min-height: calc(100vh - 50px);
     width: 80%;
     max-width: 1024px;
     text-align: center;
@@ -135,4 +135,35 @@ a:visited {
 .btn:active,
 .active {
     box-shadow: inset 0px 0px 1px 2px rgba(0,0,0,0.75);
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 42px;
+    font-weight: bold;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button.green {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+
+.button.green:hover {
+    background-color: #4CAF50;
+    color: white;
 }
