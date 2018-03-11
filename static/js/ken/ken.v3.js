@@ -1,4 +1,4 @@
-let Animations = {
+let KenAnimations = {
     stance: {
         diff: 100,
         frames: [
@@ -74,30 +74,115 @@ let Animations = {
     }
 };
 
-var circular = new Array();
-var maxLength = 4;
-var addElementToQueue = function(element){
-    if(circular.length == maxLength){
-        circular.pop();
+let GuileAnimations = {
+    stance: {
+        diff: 100,
+        frames: [
+            {'background-position': '0px -0px'},
+            {'background-position': '-90px -0px'},
+            {'background-position': '-180px -0px'}
+        ]
+    },
+    walk: {
+        diff: 100,
+        frames: [
+            {'background-position': '-270px -0px'},
+            {'background-position': '-360px -0px'},
+            {'background-position': '-0px -100px'},
+            {'background-position': '-90px -100px'},
+            {'background-position': '-180px -100px'}
+        ]
+    },
+    punch: {
+        diff: 100,
+        grounded: 0,
+        frames: [
+            {'background-position': '-270px -100px'},
+            {'background-position': '-360px -100px'},
+            {'background-position': '-0px -200px'}
+        ]
+    },
+    kick: {
+        diff: 100,
+        grounded: 1,
+        frames: [
+            {'background-position': '-90px -200px'},
+            {'background-position': '-180px -200px'},
+            {'background-position': '-270px -200px'}
+        ]
+    },
+    jump: {
+        diff: [50, 75, 100, 100, 100, 75, 50],
+        frames: [
+            {'background-position': '-360px -200px'},
+            {'background-position': '-0px -300px'},
+            {'background-position': '-90px -300px'},
+            {'background-position': '-180px -300px'},
+            {'background-position': '-270px -300px'}
+        ]
+    },
+    shoryuken: {
+        diff: 100,
+        sprite: 'ken-shoryuken',
+        dy: -30,
+        frames: [
+            {'background-position': '0px 0px'},
+            {'background-position': '-70px 0px'},
+            {'background-position': '-140px 0px'},
+            {'background-position': '-210px 0px'},
+            {'background-position': '-280px 0px'},
+            {'background-position': '-350px 0px'},
+            {'background-position': '-420px 0px'},
+            {'background-position': '-490px 0px'}
+        ]
+    },
+    kneel: {
+        diff: 100,
+        grounded: 1,
+        frames: [
+            {'background-position': '-360px -300px'}
+        ]
     }
-    circular.unshift(element);
 };
 
-class StreetFighter extends Game {
-    constructor() {
-        super();
 
+class CircularArray {
+    constructor(maxElements) {
+        this.buffer = new Array(maxElements);
+        this.maxElements = maxElements;
+    }
+
+    push(element) {
+        if (this.buffer.length == this.maxElements) {
+            this.buffer.pop();
+        }
+        this.buffer.unshift(element);
+    }
+
+    at(i) {
+        if (i >= this.maxElements) {
+            return undefined;
+        }
+
+        return this.buffer[i];
+    }
+}
+
+class Fighter {
+    constructor(fighter, shadow, keymap, animationSet) {
         this.TARGET_JMP_MAX = 1;
         this.TARGET_JMP_MS = 700;
         this.TARGET_JMP_DIST = 200;
 
-        this.ken = $('.ken');
-        this.kenShadow = $('.ken .shadow');
-        this.guile = $('.guile');
+        this.fighter = fighter;
+        this.shadow = shadow;
+        this.keymap = keymap;
+        this.actions = new CircularArray(4);
 
-        let position = this.ken.offset();
+        let position = this.fighter.offset();
         this.ground = position.top;
 
+        this.animationSet = animationSet;
         this.state = {
             animation: 'stance',
             frame: 0,
@@ -117,12 +202,12 @@ class StreetFighter extends Game {
             kicksNotGrounded: 0,
     
             velY: 0,
-        };
+        };        
 
         this.must_draw = false;
     }
 
-    update(delta) {
+    update(now, delta) {
         var position = {top: this.state.position.top, left: this.state.position.left}
         var lastTick = false;
 
@@ -153,21 +238,22 @@ class StreetFighter extends Game {
         }
     }
 
-    draw(delta) {            
+    draw(now, delta) { 
         // Render/Change animation
-        let animation = Animations[this.state.animation];
+        let animation = this.animationSet[this.state.animation];
         let diff = typeof animation.diff == 'object' ? animation.diff[this.state.frame] : animation.diff;
-        if (this.now - this.state.lastAnimated > diff) {
+        
+        if (now - this.state.lastAnimated > diff) {
             if (!this.state.frame && animation.sprite) {
-                this.ken.toggleClass(animation.sprite);
+                this.fighter.toggleClass(animation.sprite);
             }
 
-            this.ken.css(animation.frames[this.state.frame]);
+            this.fighter.css(animation.frames[this.state.frame]);
             this.state.frame = ++this.state.frame % animation.frames.length;
-            this.state.lastAnimated = this.now;
+            this.state.lastAnimated = now;
 
             if (!this.state.frame && animation.sprite) {
-                this.ken.toggleClass(animation.sprite);
+                this.fighter.toggleClass(animation.sprite);
             }
 
             if (!this.state.frame && this.state.switchOnEnd) {
@@ -180,37 +266,38 @@ class StreetFighter extends Game {
 
         if (this.must_draw) {
             if (animation.dy) {
-                this.ken.offset({
+                this.fighter.offset({
                     top: this.state.position.top + animation.dy,
                     left: this.state.position.left
                 });
             }
             else {
-                this.ken.offset(this.state.position);
-                this.kenShadow.css({
+                this.fighter.offset(this.state.position);
+                this.shadow.css({
                     bottom: - 2 - (this.ground - this.state.position.top)
                 });
             }
             
-            // Are they facing the other way?
-            var oldDir = this.state.direction;
-            if (this.state.position.left > this.guile.offset().left) {
-                this.state.direction = -1;
-            }
-            else {
-                this.state.direction = 1;
-            }
+            // Move somewhere else!
+            // // Are they facing the other way?
+            // var oldDir = this.state.direction;
+            // if (this.state.position.left > this.guile.offset().left) {
+            //     this.state.direction = -1;
+            // }
+            // else {
+            //     this.state.direction = 1;
+            // }
 
-            if (oldDir != this.state.direction) {
-                if (this.state.direction == -1) {
-                    this.ken.css({'transform': 'rotateY(-180deg)'});
-                    this.guile.css({'transform': ''});
-                }
-                else {
-                    this.ken.css({'transform': ''});
-                    this.guile.css({'transform': 'rotateY(-180deg)'});
-                }
-            }
+            // if (oldDir != this.state.direction) {
+            //     if (this.state.direction == -1) {
+            //         this.fighter.css({'transform': 'rotateY(-180deg)'});
+            //         this.guile.css({'transform': ''});
+            //     }
+            //     else {
+            //         this.fighter.css({'transform': ''});
+            //         this.guile.css({'transform': 'rotateY(-180deg)'});
+            //     }
+            // }
         }
     }
 
@@ -247,7 +334,7 @@ class StreetFighter extends Game {
             this.state.frame = 0;
 
             if (animation != 'stance') {
-                addElementToQueue(actionName || animation);
+                this.actions.push(actionName || animation);
             }
 
             return true;
@@ -261,19 +348,19 @@ class StreetFighter extends Game {
             return;
         }
 
-        if (key == 37 && !this.state.left) { 
+        if (key == this.keymap.left && !this.state.left) { 
             this.state.moving = -1;
             this.state.left = 1;
             this.switchAnimation('walk', null, 'left');
         }
 
-        if (key == 39 && !this.state.right) {
+        if (key == this.keymap.right && !this.state.right) {
             this.state.moving = +1;
             this.state.right = 1;
             this.switchAnimation('walk', null, 'right');
         }
 
-        if (key == 38) {
+        if (key == this.keymap.jump) {
             this.state.jumping = 1;
             
             if (this.state.grounded == 1 && !this.state.locked) {
@@ -283,16 +370,16 @@ class StreetFighter extends Game {
             }
         }
 
-        if (key == 40 && !this.state.moving) {
+        if (key == this.keymap.kneel && !this.state.moving) {
             this.state.kneeled = 1;
             this.switchAnimation('kneel');
         }
 
-        if (key == 65) {
+        if (key == this.keymap.punch) {
             if ((this.state.direction == 1 && 
-                    circular[0] == 'right' && circular[1] == 'kneel' && circular[2] == 'right') ||
+                    this.actions.at(0) == 'right' && this.actions.at(1) == 'kneel' && this.actions.at(2) == 'right') ||
                 (this.state.direction == -1 && 
-                    circular[0] == 'left' && circular[1] == 'kneel' && circular[2] == 'left')) {
+                    this.actions.at(0) == 'left' && this.actions.at(1) == 'kneel' && this.actions.at(2) == 'left')) {
                 console.log('shoryuken');
                 this.doLockingAction('shoryuken', 'stance');
             }
@@ -301,29 +388,29 @@ class StreetFighter extends Game {
             }
         }
 
-        if (key == 90) {
+        if (key == this.keymap.kick) {
             this.doLockingAction('kick', 'stance');
         }
     }
 
     onKeyUp(key) {
-        if (key == 37) {
+        if (key == this.keymap.left) {
             this.state.left = 0;
         }
 
-        if (key == 39) {
+        if (key == this.keymap.right) {
             this.state.right = 0;
         }
 
-        if (key == 37 || key == 39) {
+        if (key == this.keymap.left || key == this.keymap.right) {
             this.state.moving = this.state.right ? 1 : (this.state.left ? -1 : 0);
         }
 
-        if (key == 38) {
+        if (key == this.keymap.jump) {
             this.state.jumping = 0;
         }
 
-        if (key == 40) {
+        if (key == this.keymap.kneel) {
             this.state.kneeled = 0;
         }
 
@@ -333,10 +420,59 @@ class StreetFighter extends Game {
     }
 }
 
+class StreetFighter extends Game {
+    constructor() {
+        super();
+
+        this.fighters = [
+            new Fighter($('.ken'), $('.ken .shadow'), {
+                left: 37,
+                right: 39,
+                jump: 38,
+                kneel: 40,
+                punch: 65,
+                kick: 90
+            }, KenAnimations),
+            
+            new Fighter($('.guile'), $('.guile .shadow'), {
+                left: 37,
+                right: 39,
+                jump: 38,
+                kneel: 40,
+                punch: 65,
+                kick: 90
+            }, GuileAnimations)
+        ];
+    }
+
+    update(delta) {
+        this.fighters.forEach(fighter => {
+            fighter.update(this.now, delta);
+        });
+    }
+
+    draw(delta) {
+        this.fighters.forEach(fighter => {
+            fighter.draw(this.now, delta);
+        });
+    }
+
+    onKeyDown(key) {
+        this.fighters.forEach(fighter => {
+            fighter.onKeyDown(key);
+        });
+    }
+
+    onKeyUp(key) {
+        this.fighters.forEach(fighter => {
+            fighter.onKeyUp(key);
+        });
+    }
+}
+
 let game = new StreetFighter();
 let engine = new Engine(game, 60);
 engine.start();
-
 
 var $mute = $('.mute');
 var $unmute = $('.unmute');
