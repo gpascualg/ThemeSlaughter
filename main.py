@@ -2,7 +2,7 @@ from flask import Flask
 from flask_github import GitHub
 from flask_session import Session
 
-from src.database import session, db
+from src.database import Database
 from src.propose import Propose
 from src.vote import Vote
 from src.login import Login
@@ -22,7 +22,7 @@ class App(object):
 
         # Server side sessions
         app.config['SESSION_TYPE'] = 'mongodb'
-        app.config['SESSION_MONGODB'] = session
+        app.config['SESSION_MONGODB'] = Database.session
         Session(app)
 
         # Create rules
@@ -44,6 +44,9 @@ class App(object):
         self.app.run(*args, **kwargs)
 
 def main():
+    # Host from parameters
+    Database.connect()
+
     app = App()
     app.start(debug=True)
 

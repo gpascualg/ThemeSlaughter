@@ -3,7 +3,7 @@ from flask.views import MethodView
 from bson.objectid import ObjectId
 
 from context import build_context
-from .database import db
+from .database import Database
 
 class AuthenticationHandler(MethodView):
     def get(self, oauth_token):
@@ -12,9 +12,10 @@ class AuthenticationHandler(MethodView):
             flash("Authorization failed.")
             return redirect(next_url)
 
+        db = Database.get('theme_slaughter')
         ses = db.sessions.find_one({'github_access_token': oauth_token})
         if ses is None:
-            res = db.sessions.insert_one({'github_access_token': oauth_token})
+            res = db.insert_one({'github_access_token': oauth_token})
             session['ses_id'] = str(res.inserted_id)
         else:
             session['ses_id'] = str(ses['_id'])
@@ -36,6 +37,7 @@ def AuthenticationBefore(app):
     def do_before():
         g.user = None
         if 'ses_id' in session:
+            db = Database.get('theme_slaughter')
             g.user = db.sessions.find_one({'_id': ObjectId(session['ses_id'])})
             # TODO: Build user context
 
