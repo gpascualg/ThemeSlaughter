@@ -20,7 +20,7 @@
     <div class='themes'>
         {% for theme in voting.themes %}
         <div class='theme'>
-            <div class='name'>
+            <div class='name' data-name="{{ theme.name }}">
                 <span class='shadow pad round-left'>{{ theme.name }}</span>
             </div>
             <div class='buttons'>

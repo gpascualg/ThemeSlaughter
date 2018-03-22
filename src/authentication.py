@@ -2,8 +2,10 @@ from flask import render_template, request, url_for, session, redirect, flash, g
 from flask.views import MethodView
 from bson.objectid import ObjectId
 
-from context import build_context
+from .context import build_context
 from .database import Database
+from .args import args
+
 
 class AuthenticationHandler(MethodView):
     def get(self, oauth_token):
@@ -12,7 +14,7 @@ class AuthenticationHandler(MethodView):
             flash("Authorization failed.")
             return redirect(next_url)
 
-        db = Database.get('theme_slaughter')
+        db = Database.theme_slaughter
         ses = db.sessions.find_one({'github_access_token': oauth_token})
         if ses is None:
             res = db.insert_one({'github_access_token': oauth_token})
@@ -36,8 +38,12 @@ def AuthenticationBefore(app):
     @app.before_request
     def do_before():
         g.user = None
-        if 'ses_id' in session:
-            db = Database.get('theme_slaughter')
+        if args.fake_user:
+            g.user = {
+                '_id': 'FakeUser'
+            }
+        elif 'ses_id' in session:
+            db = Database.theme_slaughter
             g.user = db.sessions.find_one({'_id': ObjectId(session['ses_id'])})
             # TODO: Build user context
 
