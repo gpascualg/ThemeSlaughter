@@ -1,24 +1,30 @@
 from flask import render_template, request, jsonify, g, abort
 from flask.views import MethodView
 
-from .context import build_context
+from .context import build_context, get_config
 from .database import Database
+from .authentication import force_login
 
+
+def theme(t):
+    return {
+        'name': t['_id'], 
+        'voted': {v['user']: v['vote'] for v in t['votes']}.get(g.user['_id'])
+    }
 
 class Vote(MethodView):
-    def get_themes(self):
-        themes = Database.theme_slaughter.themes.find({ 'active': True })
-        themes = map(lambda t: {
-            'name': t['_id'], 
-            'voted': {k:v for k,v in t['votes']}.get(g.user['_id'])
-        }, themes)
+    decorators = [force_login]
 
-        return themes
+    def get_themes(self):
+        themes = Database.theme_slaughter.themes.find({'active': True})
+        themes = map(theme, themes)
+        return list(themes)
 
     def get(self):
         data = {
             'voting': {
-                'round': 1,
+                'round': get_config('voting_round'),
+                'enabled': get_config('voting_enabled'),
                 'themes': self.get_themes()
             }
         }
@@ -31,6 +37,9 @@ class Vote(MethodView):
 
         if not data['cast'] in ('yes', 'neutral', 'no'):
             return abort(400)
+
+        if not get_config('voting_enabled'):
+            return jsonify({'result': 'disabled'})
 
         # PULL
         Database.theme_slaughter.themes.update(

@@ -2,12 +2,13 @@ from flask import Flask
 from flask_github import GitHub
 from flask_session import Session
 
+from src.args import args
 from src.database import Database
 from src.propose import Propose
 from src.vote import Vote
 from src.login import Login
 
-from src.authentication import AuthenticationHandler, AuthenticationToken, AuthenticationBefore, force_login
+from src.authentication import AuthenticationHandler, AuthenticationToken, AuthenticationBefore
 
 
 class App(object):
@@ -26,7 +27,7 @@ class App(object):
         Session(app)
 
         # Create rules
-        app.add_url_rule('/propose', view_func=force_login(Propose.as_view('propose')))
+        app.add_url_rule('/propose', view_func=Propose.as_view('propose'))
         app.add_url_rule('/vote', view_func=Vote.as_view('vote'))
         app.add_url_rule('/login', view_func=Login.as_view('login'))
 
@@ -48,6 +49,6 @@ def main():
     Database.connect()
 
     app = App()
-    app.start(debug=True)
+    app.start(debug=args.debug)
 
 main()

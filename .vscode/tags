@@ -5,31 +5,39 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 App	../main.py	/^class App(object):$/;"	kind:class	line:13
-AuthenticationBefore	../src/authentication.py	/^def AuthenticationBefore(app):$/;"	kind:function	line:34
-AuthenticationHandler	../src/authentication.py	/^class AuthenticationHandler(MethodView):$/;"	kind:class	line:8
-AuthenticationToken	../src/authentication.py	/^def AuthenticationToken(github):$/;"	kind:function	line:24
+AuthenticationBefore	../src/authentication.py	/^def AuthenticationBefore(app):$/;"	kind:function	line:37
+AuthenticationHandler	../src/authentication.py	/^class AuthenticationHandler(MethodView):$/;"	kind:class	line:10
+AuthenticationToken	../src/authentication.py	/^def AuthenticationToken(github):$/;"	kind:function	line:27
+Database	../src/database.py	/^class Database(metaclass=DatabaseType):$/;"	kind:class	line:9
+DatabaseType	../src/database.py	/^class DatabaseType(type):$/;"	kind:class	line:3
 Login	../src/login.py	/^class Login(MethodView):$/;"	kind:class	line:6
 Propose	../src/propose.py	/^class Propose(MethodView):$/;"	kind:class	line:6
-Vote	../src/vote.py	/^class Vote(MethodView):$/;"	kind:class	line:6
+Vote	../src/vote.py	/^class Vote(MethodView):$/;"	kind:class	line:8
+__getattribute__	../src/database.py	/^    def __getattribute__(cls, key):$/;"	kind:member	line:4
 __init__	../main.py	/^    def __init__(self, name=__name__):$/;"	kind:member	line:14
 __init__.py	../src/__init__.py	1;"	kind:file	line:1
+args	../src/args.py	/^args = parser.parse_args()$/;"	kind:variable	line:6
+args.py	../src/args.py	1;"	kind:file	line:1
 authentication.py	../src/authentication.py	1;"	kind:file	line:1
-build_context	../context.py	/^def build_context():$/;"	kind:function	line:3
-context.py	../context.py	1;"	kind:file	line:1
+build_context	../src/context.py	/^def build_context(data={}):$/;"	kind:function	line:3
+connect	../src/database.py	/^    def connect(host=None):$/;"	kind:member	line:12
+context.py	../src/context.py	1;"	kind:file	line:1
 database.py	../src/database.py	1;"	kind:file	line:1
-db	../src/database.py	/^db = session.theme_slaughter$/;"	kind:variable	line:4
-decorator	../src/authentication.py	/^    def decorator(*args, **kwargs):$/;"	kind:function	line:44
-do_before	../src/authentication.py	/^    def do_before():$/;"	kind:function	line:36
-force_login	../src/authentication.py	/^def force_login(f):$/;"	kind:function	line:43
-get	../src/authentication.py	/^    def get(self, oauth_token):$/;"	kind:member	line:9
+decorator	../src/authentication.py	/^    def decorator(*args, **kwargs):$/;"	kind:function	line:52
+do_before	../src/authentication.py	/^    def do_before():$/;"	kind:function	line:39
+force_login	../src/authentication.py	/^def force_login(f):$/;"	kind:function	line:51
+get	../src/authentication.py	/^    def get(self, oauth_token):$/;"	kind:member	line:11
 get	../src/login.py	/^    def get(self):$/;"	kind:member	line:7
 get	../src/propose.py	/^    def get(self):$/;"	kind:member	line:7
-get	../src/vote.py	/^    def get(self):$/;"	kind:member	line:7
-get_token	../src/authentication.py	/^    def get_token():$/;"	kind:function	line:26
+get	../src/vote.py	/^    def get(self):$/;"	kind:member	line:18
+get_themes	../src/vote.py	/^    def get_themes(self):$/;"	kind:member	line:9
+get_token	../src/authentication.py	/^    def get_token():$/;"	kind:function	line:29
 login.py	../src/login.py	1;"	kind:file	line:1
 main	../main.py	/^def main():$/;"	kind:function	line:46
 main.py	../main.py	1;"	kind:file	line:1
+parser	../src/args.py	/^parser = argparse.ArgumentParser(description='Start server.')$/;"	kind:variable	line:3
+post	../src/vote.py	/^    def post(self):$/;"	kind:member	line:27
 propose.py	../src/propose.py	1;"	kind:file	line:1
-session	../src/database.py	/^session = MongoClient()$/;"	kind:variable	line:3
+session	../src/database.py	/^    session = None$/;"	kind:variable	line:10
 start	../main.py	/^    def start(self, *args, **kwargs):$/;"	kind:member	line:43
 vote.py	../src/vote.py	1;"	kind:file	line:1

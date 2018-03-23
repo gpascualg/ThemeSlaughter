@@ -72,10 +72,27 @@ a:visited {
     backface-visibility: hidden;
 }
 
+.ib {
+    display: inline-block;
+}
+
 .theme .name {
     text-align: right;
     width: 50%;
     float: left;
+}
+
+.theme .input {
+    display: inline-block;
+    text-align: center;
+    width: 50%;
+    vertical-align: middle;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    padding: 1.6em;
+    height: 30px;
+    border: 1px solid #AAA;
+    color: #666;
 }
 
 .theme .buttons {
@@ -88,8 +105,8 @@ a:visited {
     clear: both;
 }
 
-.btn,
-.btn::after {
+.btn, .btn-large,
+.btn::after, .btn-large::after {
     display: inline-block;
     background: #FEFFFF;
     height: 30px;
@@ -100,7 +117,15 @@ a:visited {
     padding: 1em;
 }
 
-.btn.yes {
+.btn-large, .btn-large::after {
+    width: 50%;
+    height: auto;
+    line-height: inherit;
+    padding: 0.5em;
+    border-radius: 1em;
+}
+
+.btn.yes, .btn-large.yes {
     background: #4FD894;
 }
 
@@ -111,6 +136,10 @@ a:visited {
 .btn.no,
 .buttons .shadow {
     background: rgb(216, 79, 79);
+}
+
+.disabled {
+    cursor: not-allowed;
 }
 
 [data-icon] {
@@ -129,11 +158,11 @@ a:visited {
     filter: contrast(200%);
 } */
 /* Scale up the box */
-.btn:hover {
+.btn:not(.disabled):hover {
     transform: scale(1.1, 1.1);
 }
 
-.btn:active,
+.btn:not(.disabled):active,
 .active {
     box-shadow: inset 0px 0px 1px 2px rgba(0,0,0,0.75);
 }
