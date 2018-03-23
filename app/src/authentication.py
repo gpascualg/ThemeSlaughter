@@ -48,6 +48,13 @@ def AuthenticationBefore(app):
             # TODO: Build user context
 
 
+def Authorize(github):
+    class DoAuthorize(MethodView):
+        def get(self):
+            return github.authorize(scope='user,repo,read:org')
+
+    return DoAuthorize
+
 def force_login(f):
     def decorator(*args, **kwargs):
         if g.user:

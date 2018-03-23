@@ -41,4 +41,7 @@ $(function(){
     // Proposing
     $('.btn-large.yes').click((e) => submit(e.target));
     $('.input').keypress((e) => { if (e.which == 13) submit($('.btn-large.yes')); });
+
+    // Login
+    $('.login').click(() => location.href = 'do-login');
 });

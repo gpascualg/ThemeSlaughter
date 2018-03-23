@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_github import GitHub
 from flask_session import Session
@@ -8,7 +10,7 @@ from src.propose import Propose
 from src.vote import Vote
 from src.login import Login
 
-from src.authentication import AuthenticationHandler, AuthenticationToken, AuthenticationBefore
+from src.authentication import AuthenticationHandler, AuthenticationToken, AuthenticationBefore, Authorize
 
 
 class App(object):
@@ -16,9 +18,9 @@ class App(object):
         app = Flask(name)
 
         # Github config
-        app.config['SECRET_KEY'] = 'poeopkqwe21093u102ewiWQ*Eoqpw'
-        app.config['GITHUB_CLIENT_ID'] = '9ff841f5eb302de30531'
-        app.config['GITHUB_CLIENT_SECRET'] = '9916474c4b499923a415750169d6da2708030c82'
+        app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+        app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
+        app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
         self.github = GitHub(app)
 
         # Server side sessions
@@ -30,6 +32,7 @@ class App(object):
         app.add_url_rule('/propose', view_func=Propose.as_view('propose'))
         app.add_url_rule('/vote', view_func=Vote.as_view('vote'))
         app.add_url_rule('/login', view_func=Login.as_view('login'))
+        app.add_url_rule('/do-login', view_func=Authorize(self.github).as_view('do-login'))
 
         # Github login related rules
         app.add_url_rule(
@@ -46,9 +49,9 @@ class App(object):
 
 def main():
     # Host from parameters
-    Database.connect()
+    Database.connect(host=args.mongo_host)
 
     app = App()
-    app.start(debug=args.debug)
+    app.start(host='0.0.0.0', debug=args.debug)
 
 main()

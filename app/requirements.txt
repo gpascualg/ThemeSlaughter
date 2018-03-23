@@ -1,0 +1,4 @@
+Github-Flask
+Flask-Session
+flask
+pymongo

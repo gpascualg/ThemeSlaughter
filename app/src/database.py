@@ -1,5 +1,6 @@
 from pymongo import MongoClient, ASCENDING
 
+
 class DatabaseType(type):
     def __getattribute__(cls, key):
         if key in ('connect', 'session'):

@@ -1,0 +1,17 @@
+version: "2"
+services:
+  web:
+    image: "themeslaughter"
+    command: "--mongo-host=mongo"
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID
+      - GITHUB_CLIENT_SECRET=$GITHUB_CLIENT_SECRET
+  mongo:
+    image: "mongo:3.4"
+    volumes:
+      - "$DB:/data/db"
