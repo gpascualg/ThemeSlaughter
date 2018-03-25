@@ -13,6 +13,10 @@ a:visited {
     text-decoration: initial;
 }
 
+a:hover {
+    color: #BBB;
+}
+
 .wrapper {
     margin: 0 auto;
     padding-top: 50px;

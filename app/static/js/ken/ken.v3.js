@@ -169,7 +169,7 @@ class CircularArray {
 }
 
 class Fighter {
-    constructor(fighter, shadow, keymap, animationSet) {
+    constructor(fighter, shadow, keymap, animationSet, direction) {
         this.TARGET_JMP_MAX = 1;
         this.TARGET_JMP_MS = 700;
         this.TARGET_JMP_DIST = 200;
@@ -190,7 +190,7 @@ class Fighter {
             switchOnEnd: false,
 
             position: position,
-            direction: 1,
+            direction: direction || 1,
     
             locked: 0,
             left: 0,
@@ -277,33 +277,12 @@ class Fighter {
                     bottom: - 2 - (this.ground - this.state.position.top)
                 });
             }
-            
-            // Move somewhere else!
-            // // Are they facing the other way?
-            // var oldDir = this.state.direction;
-            // if (this.state.position.left > this.guile.offset().left) {
-            //     this.state.direction = -1;
-            // }
-            // else {
-            //     this.state.direction = 1;
-            // }
-
-            // if (oldDir != this.state.direction) {
-            //     if (this.state.direction == -1) {
-            //         this.fighter.css({'transform': 'rotateY(-180deg)'});
-            //         this.guile.css({'transform': ''});
-            //     }
-            //     else {
-            //         this.fighter.css({'transform': ''});
-            //         this.guile.css({'transform': 'rotateY(-180deg)'});
-            //     }
-            // }
         }
     }
 
     doLockingAction(animation, switchOnEnd) {
         if (!this.state.grounded &&
-                (this.state.kicksNotGrounded > 0 || Animations[animation].grounded)) {
+                (this.state.kicksNotGrounded > 0 || this.animationSet   [animation].grounded)) {
             return false;
         }
 
@@ -426,22 +405,22 @@ class StreetFighter extends Game {
 
         this.fighters = [
             new Fighter($('.ken'), $('.ken .shadow'), {
-                left: 37,
-                right: 39,
-                jump: 38,
-                kneel: 40,
-                punch: 65,
-                kick: 90
+                left: 81,
+                right: 69,
+                jump: 87,
+                kneel: 83,
+                punch: 68,
+                kick: 65
             }, KenAnimations),
             
             new Fighter($('.guile'), $('.guile .shadow'), {
-                left: 37,
-                right: 39,
-                jump: 38,
-                kneel: 40,
-                punch: 65,
-                kick: 90
-            }, GuileAnimations)
+                left: 85,
+                right: 79,
+                jump: 73,
+                kneel: 75,
+                punch: 74,
+                kick: 76
+            }, GuileAnimations, -1)
         ];
     }
 
@@ -455,6 +434,28 @@ class StreetFighter extends Game {
         this.fighters.forEach(fighter => {
             fighter.draw(this.now, delta);
         });
+
+        let fighter1 = this.fighters[0];
+        let fighter2 = this.fighters[1];
+        let oldDir = fighter1.state.direction;
+
+        if (fighter1.state.position.left * fighter1.state.direction > fighter2.state.position.left * fighter1.state.direction) {
+            fighter1.state.direction *= -1;
+            fighter2.state.direction *= -1;
+        }
+        
+        if (oldDir != fighter1.state.direction) {
+            let current = fighter1.fighter.css('transform');
+
+            if (current != '' && current != 'none') {
+                fighter1.fighter.css({'transform': ''});
+                fighter2.fighter.css({'transform': 'rotateY(-180deg)'});
+            }
+            else {
+                fighter2.fighter.css({'transform': ''});
+                fighter1.fighter.css({'transform': 'rotateY(-180deg)'});
+            }
+        }
     }
 
     onKeyDown(key) {

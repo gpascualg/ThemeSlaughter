@@ -6,6 +6,7 @@ from flask_session import Session
 
 from src.args import args
 from src.database import Database
+from src.index import Index
 from src.propose import Propose
 from src.vote import Vote
 from src.login import Login
@@ -29,6 +30,7 @@ class App(object):
         Session(app)
 
         # Create rules
+        app.add_url_rule('/', view_func=Index.as_view('index'))
         app.add_url_rule('/propose', view_func=Propose.as_view('propose'))
         app.add_url_rule('/vote', view_func=Vote.as_view('vote'))
         app.add_url_rule('/login', view_func=Login.as_view('login'))
