@@ -27,4 +27,4 @@ if __name__ == '__main__':
         'bind': '%s:%s' % (args.host, args.port),
         'workers': args.workers,
     }
-    StandaloneApplication(App(), options).run()
+    StandaloneApplication(App().app, options).run()

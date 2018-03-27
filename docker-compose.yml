@@ -2,7 +2,7 @@ version: "2"
 services:
   web:
     image: "themeslaughter"
-    command: "--mongo-host=mongo"
+    command: "--mongo-host=mongo --host=0.0.0.0 --port=5000"
     ports:
       - "5000:5000"
     links:

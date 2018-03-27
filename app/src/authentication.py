@@ -51,7 +51,7 @@ def AuthenticationBefore(app):
 def Authorize(github):
     class DoAuthorize(MethodView):
         def get(self):
-            return github.authorize(scope='user,repo,read:org')
+            return github.authorize(scope='user')
 
     return DoAuthorize
 
