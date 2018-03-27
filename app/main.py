@@ -16,6 +16,10 @@ from src.authentication import AuthenticationHandler, AuthenticationToken, Authe
 
 class App(object):
     def __init__(self, name=__name__):
+        # Host from parameters
+        Database.connect(host=args.mongo_host)
+
+        # App
         app = Flask(name)
 
         # Github config
@@ -46,14 +50,12 @@ class App(object):
         
         self.app = app
 
-    def start(self, *args, **kwargs):
+    def run(self, *args, **kwargs):
         self.app.run(*args, **kwargs)
 
 def main():
-    # Host from parameters
-    Database.connect(host=args.mongo_host)
-
     app = App()
-    app.start(host='0.0.0.0', debug=args.debug)
+    app.run(host='0.0.0.0', debug=args.debug)
 
-main()
+if __name__ == '__main__':
+    main()
