@@ -11,5 +11,5 @@ RUN apk --update add --no-cache python3 py3-pip && \
 
 EXPOSE 5000
 COPY app /opt/service
-ENTRYPOINT [ "python3", "/opt/service/main.py" ]
+ENTRYPOINT [ "python3", "/opt/service/wsgi.py" ]
 CMD [""]
