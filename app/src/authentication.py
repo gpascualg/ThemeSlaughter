@@ -17,7 +17,7 @@ class AuthenticationHandler(MethodView):
         db = Database.theme_slaughter
         ses = db.sessions.find_one({'github_access_token': oauth_token})
         if ses is None:
-            res = db.insert_one({'github_access_token': oauth_token})
+            res = db.sessions.insert_one({'github_access_token': oauth_token})
             session['ses_id'] = str(res.inserted_id)
         else:
             session['ses_id'] = str(ses['_id'])
@@ -44,14 +44,17 @@ def AuthenticationBefore(app):
             }
         elif 'ses_id' in session:
             db = Database.theme_slaughter
-            g.user = db.sessions.find_one({'_id': ObjectId(session['ses_id'])})
+            g.user = db.sessions.find_one({'_id': ObjectId(str(session['ses_id']))})
             # TODO: Build user context
 
 
 def Authorize(github):
     class DoAuthorize(MethodView):
         def get(self):
-            return github.authorize(scope='user')
+            next_uri = None
+            if 'next_uri' in session:
+                next_uri = 'http://slaughter.hack-a-game.com/github-callback?next=' + session['next_uri']
+            return github.authorize(scope='user', redirect_uri=next_uri)
 
     return DoAuthorize
 
@@ -60,5 +63,5 @@ def force_login(f):
         if g.user:
             return f(*args, **kwargs)
         else:
-            return redirect(url_for('login'))
+            return redirect(url_for('login', next_uri=str(request.url_rule.rule)[1:]))
     return decorator

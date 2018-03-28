@@ -37,12 +37,12 @@ class App(object):
         app.add_url_rule('/', view_func=Index.as_view('index'))
         app.add_url_rule('/propose', view_func=Propose.as_view('propose'))
         app.add_url_rule('/vote', view_func=Vote.as_view('vote'))
-        app.add_url_rule('/login', view_func=Login.as_view('login'))
+        app.add_url_rule('/login/<next_uri>', view_func=Login.as_view('login'))
         app.add_url_rule('/do-login', view_func=Authorize(self.github).as_view('do-login'))
 
         # Github login related rules
         app.add_url_rule(
-            '/github-callback/<oauth_token>', 
+            '/github-callback', 
             view_func=self.github.authorized_handler(AuthenticationHandler.as_view('github-callback'))
         )
         AuthenticationToken(self.github)

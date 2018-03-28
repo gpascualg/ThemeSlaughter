@@ -43,5 +43,5 @@ $(function(){
     $('.input').keypress((e) => { if (e.which == 13) submit($('.btn-large.yes')); });
 
     // Login
-    $('.login').click(() => location.href = 'do-login');
+    $('.login').click(() => location.href = '/do-login');
 });
