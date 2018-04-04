@@ -12,10 +12,10 @@
             <div class='ib'>
                 <span class='shadow pad round-left'>Theme name:</span>
             </div>
-            <input class="input shadow" type="text" placeholder="Short, nice and direct: &lt;falling skies&gt;">
+            <input class='input shadow {{ "disabled" if not enabled }}' {{ "disabled" if not enabled }} type="text" placeholder="Short, nice and direct: &lt;falling skies&gt;">
             <div class='clear'></div>
             <br />
-            <button class="btn-large yes">Submit</button>
+            <button class='btn-large yes {{ "disabled" if not enabled }}' {{ "disabled" if not enabled }}>Submit</button>
         </div>
     </div>
 </div>
@@ -29,6 +29,12 @@
 <div id="duplicated-modal" class="qm-modal">
     <h1>Oh :(</h1>
     <h2>It seems like your theme is already in the list</h2>
+    <a href="#" class="qm-close-modal">Close window</a>
+</div>
+
+<div id="disabled-modal" class="qm-modal">
+    <h1>Oh :(</h1>
+    <h2>No more themes are accepted!</h2>
     <a href="#" class="qm-close-modal">Close window</a>
 </div>
 
