@@ -34,18 +34,26 @@ def AuthenticationToken(github):
 
     return get_token
 
-def AuthenticationBefore(app):
+def AuthenticationBefore(app, github):
     @app.before_request
     def do_before():
         g.user = None
         if args.fake_user:
             g.user = {
-                '_id': 'FakeUser'
+                '_id': 'FakeUser',
+                'username': 'FakeUser'
             }
         elif 'ses_id' in session:
             db = Database.theme_slaughter
             g.user = db.sessions.find_one({'_id': ObjectId(str(session['ses_id']))})
             # TODO: Build user context
+
+            if g.user and 'username' not in g.user:
+                g.user['username'] = github.get('/user')['login']
+                db.sessions.update_one(
+                    {'_id': ObjectId(str(session['ses_id']))},
+                    g.user
+                )
 
 
 def Authorize(github):

@@ -46,7 +46,7 @@ class App(object):
             view_func=self.github.authorized_handler(AuthenticationHandler.as_view('github-callback'))
         )
         AuthenticationToken(self.github)
-        AuthenticationBefore(app)
+        AuthenticationBefore(app, self.github)
         
         self.app = app
 

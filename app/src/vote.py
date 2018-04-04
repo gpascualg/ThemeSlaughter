@@ -9,7 +9,7 @@ from .authentication import force_login
 def theme(t):
     return {
         'name': t['_id'], 
-        'voted': {v['user']: v['vote'] for v in t['votes']}.get(g.user['_id'])
+        'voted': {v['user']: v['vote'] for v in t['votes']}.get(g.user['username'])
     }
 
 class Vote(MethodView):
@@ -47,7 +47,7 @@ class Vote(MethodView):
             { 
                 '$pull': {
                     'votes': {
-                        'user': g.user['_id']
+                        'user': g.user['username']
                     }
                 }
             }
@@ -59,7 +59,7 @@ class Vote(MethodView):
             { 
                 '$push': {
                     'votes': {
-                        'user': g.user['_id'],
+                        'user': g.user['username'],
                         'vote': data['cast']
                     }
                 }
