@@ -52,7 +52,7 @@ def AuthenticationBefore(app, github):
                 g.user['username'] = github.get('/user')['login']
                 db.sessions.update_one(
                     {'_id': ObjectId(str(session['ses_id']))},
-                    g.user
+                    {'$set': {'username': g.user['username']}}
                 )
 
 
