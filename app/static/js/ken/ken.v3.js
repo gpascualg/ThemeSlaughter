@@ -471,13 +471,15 @@ class StreetFighter extends Game {
     }
 }
 
-let game = new StreetFighter();
-let engine = new Engine(game, 60);
-engine.start();
+if (!isMobile) {
+    let game = new StreetFighter();
+    let engine = new Engine(game, 60);
+    engine.start();
 
-var $mute = $('.mute');
-var $unmute = $('.unmute');
+    var $mute = $('.mute');
+    var $unmute = $('.unmute');
 
-if (JSON.parse(localStorage.muted)) { $mute.hide(); $unmute.show(); }
-$mute.click(function() { $mute.hide(); $unmute.show(); soundManager.mute(); localStorage.muted = true; })
-$unmute.click(function() { $unmute.hide(); $mute.show(); soundManager.unmute(); localStorage.muted = false; })
+    if (JSON.parse(localStorage.muted)) { $mute.hide(); $unmute.show(); }
+    $mute.click(function() { $mute.hide(); $unmute.show(); soundManager.mute(); localStorage.muted = true; })
+    $unmute.click(function() { $unmute.hide(); $mute.show(); soundManager.unmute(); localStorage.muted = false; })
+}

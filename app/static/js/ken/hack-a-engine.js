@@ -50,7 +50,7 @@ class Engine {
             return;
         }
 
-        game.now = timestamp;
+        this.game.now = timestamp;
         this.delta += timestamp - this.lastFrameTimeMs;
         this.lastFrameTimeMs = timestamp;
 

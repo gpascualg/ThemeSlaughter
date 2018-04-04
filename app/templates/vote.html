@@ -21,7 +21,7 @@
         {% for theme in voting.themes %}
         <div class='theme'>
             <div class='name' data-name="{{ theme.name }}">
-                <span class='shadow pad round-left'>{{ theme.name }}</span>
+                <span class='shadow pad round-left' title="{{ theme.name }}">{{ theme.name }}</span>
             </div>
             <div class='buttons'>
                 <span class='shadow round-right'>
@@ -43,7 +43,21 @@
         <div class="shadow"></div>
     </div>
 
-    <script>localStorage.muted = localStorage.muted || false;</script>
+    <script>
+        var mq = window.matchMedia( "only screen and (max-width: 800px)" ); 
+        var isMobile = mq.matches;
+        localStorage.muted = localStorage.muted || isMobile;
+
+        if (isMobile) {
+            $('.ken').hide();
+            $('.guile').hide();
+            $('.audio').hide();
+
+            document.body.addEventListener('touchstart', function() {
+                document.body.classList.add('touched');
+            });
+        }
+    </script>
     <script src="{{ url_for('static', filename='js/ken/soundmanager2.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ken/webAudioApiForDesigners.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ken/audio.js') }}"></script>
