@@ -10,6 +10,7 @@ from src.index import Index
 from src.propose import Propose
 from src.vote import Vote
 from src.login import Login
+from src.context import get_config
 
 from src.authentication import AuthenticationHandler, AuthenticationToken, AuthenticationBefore, Authorize
 
@@ -18,6 +19,19 @@ class App(object):
     def __init__(self, name=__name__):
         # Host from parameters
         Database.connect(host=args.mongo_host)
+
+        # Make sure default config is on
+        default_config = {
+            'voting_round': 1,
+            'voting_enabled': False,
+            'proposing_enabled': True
+        }
+        
+        for key, value in default_config.items():
+            try:
+                get_config(key)
+            except:
+                Database.theme_slaughter.config.insert_one({'_id': key, 'value': value})
 
         # App
         app = Flask(name)
